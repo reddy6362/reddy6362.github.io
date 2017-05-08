@@ -5,53 +5,40 @@
       <meta name="viewport" content="width=device-width,minimum-scale=1.0, maximum-scale=1.0" />
       <title>Universal Links</title>
       <style>@media screen and (max-device-width:480px){body{-webkit-text-size-adjust:none}}</style>
-      
-      <!-- implement javascript on web page that first first tries to open the deep link
-       1. if user has app installed, then they would be redirected to open the app to specified screen
-       2. if user doesn't have app installed, then their browser wouldn't recognize the URL scheme
-       and app wouldn't open since it's not installed. In 1 second (1000 milliseconds) user is redirected
-       to download app from app store.
-       -->
+
       <script>
-		function IsIOS() {
-            return !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-        }
+      var timeout;
 
-        function IsAndroid() {
-           return (navigator.userAgent.indexOf('Android') > -1 || navigator.userAgent.indexOf('Adr') > -1);
-        }
+	  function preventPopup() {
+	      clearTimeout(timeout);
+	      timeout = null;
+	      window.removeEventListener('pagehide', preventPopup);
+	  }
 
-        window.onload = function() {
-          var now = new Date().valueOf();
-          setTimeout(function () {
-                     if (new Date().valueOf() - now > 100) return;
-//                if (IsIOS()) {
-//				document.getElementById("os").innerHTML= "ios";
-					window.location = "https://my.testfairy.com/download/6MV34C1K74SJTC9G6GRKJDSK5N9R8YM1HDP8YH8V0JENCW4CHW15BW8P04/getapp";
-                     }, 50);
-//				}
-//				if (IsAndroid()) {
-//				document.getElementById("os").innerHTML= "Android";
-//                   window.location = "https://dl.testfairy.com/download/6MV34C1M64VJTC9G6GRKJDSK5MYMG109S47DCPAKQ7CX777E2BK7H3AAF4/SengoProd1.3-testfairy.apk";
-//               }
-                     window.location = "sengo://";
-        }
+	  function openApp() {
+	      $('<iframe />')
+	      .attr('src', "sengo://")
+	      .attr('style', 'display:none;')
+	      .appendTo('body');
+
+	      timeout = setTimeout(function() {
+	              document.location = "https://my.testfairy.com/download/6MV34C1K74SJTC9G6GRKJDSK5N9R8YM1HDP8YH8V0JENCW4CHW15BW8P04/getapp";
+	      }, 500);
+	      window.addEventListener('pagehide', preventPopup);
+}
+
+window.onload = openApp()
+
+//        window.onload = function() {
+//          var now = new Date().valueOf();
+//          setTimeout(function () {
+//                     if (new Date().valueOf() - now > 100) return;
+//					window.location = "https://my.testfairy.com/download/6MV34C1K74SJTC9G6GRKJDSK5N9R8YM1HDP8YH8V0JENCW4CHW15BW8P04/getapp";
+//                     }, 50);
+//                     window.location = "sengo://";
+//        }
       </script>
       </head>
   <body>
-    <!--
-        <h>Sample download from Testfairy as the App is not available in Appstore</h>
-        <input type="button" value="Download App" onclick="window.open('https://my.testfairy.com/download/6MV32E9Q70R2TCHP6WVK8C9N60TJTPAK73WWEQENKVEG5D0QWEHY3VXNPNPT2/getapp')" />
-    -->
-    <!-- button to Download App for new app users
-     <form action="https://itunes.apple.com/in/app/uber/id368677368?mt=8" target="_blank">
-     <input type="submit" value="Download" />
-     </form>
-     
-     -- button to Open App to specific screen for existing app users --
-     <form action="unidosselfservice://" target="_blank">
-     <input type="submit" value="Open App" />
-     </form>
-     !-->
   </body>
 </html>
