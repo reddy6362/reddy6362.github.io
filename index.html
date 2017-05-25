@@ -1,34 +1,8 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-      <meta name="viewport" content="width=device-width,minimum-scale=1.0, maximum-scale=1.0" />
-      <title>Universal Links</title>
-      <style>@media screen and (max-device-width:480px){body{-webkit-text-size-adjust:none}}</style>
-
-      <script>
-      var timeout;
-
-
-window.onload = preventPopup()
-
-        window.onload = function() {
-
-window.location = 'sengo://'; // will result in error message if app not installed
-setTimeout(function() {
-   // Link to the App Store should go here -- only fires if deep link fails
-   window.location = "https://itunes.apple.com/in/app/uber/id368677368?mt=8";
-}, 500);
-
-//          var now = new Date().valueOf();
-//          setTimeout(function () {
-//                     if (new Date().valueOf() - now > 100) return;
-//					window.location = "https://my.testfairy.com/download/6MV34C1K74SJTC9G6GRKJDSK5N9R8YM1HDP8YH8V0JENCW4CHW15BW8P04/getapp";
-//                     }, 50);
-//                     window.location = "sengo://";
-        }
-      </script>
-      </head>
-  <body>
-  </body>
+    <body>
+        <script language="javascript">
+            window.location = 'sengoqa://DEF';
+        </script>
+    </body>
 </html>
